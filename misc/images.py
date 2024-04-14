@@ -1,4 +1,4 @@
-from misc.config import TILE_SIZE
+from misc.config import TILE_SIZE, BAR, HEIGHT
 import pygame
 
 size=TILE_SIZE
@@ -10,6 +10,7 @@ kelE=pygame.transform.scale(pygame.image.load("images/kelE.png"),(size, size))
 waiterImgs = [kelS, kelW, kelN, kelE]
 
 imgWaiting = pygame.transform.scale(pygame.image.load("images/waiting.png"),(size, size))
+imgGiveMe = pygame.transform.scale(pygame.image.load("images/giveme.png"),(size, size))
 imgClient = pygame.transform.scale(pygame.image.load("images/notemptyseat.png"),(size, size))
 imgFreeSeat = pygame.transform.scale(pygame.image.load("images/seat.png"), (size, size))
 imgTakenSeat = pygame.transform.scale(pygame.image.load("images/notemptyseat.png"),(size, size))
@@ -32,3 +33,5 @@ f12 = pygame.transform.scale(pygame.image.load("images/faces/f12.png"), (size, s
 
 
 faces = [f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12]
+
+barImg = pygame.transform.scale(pygame.image.load("images/bar.png"), (size*BAR, size*HEIGHT))

@@ -11,4 +11,6 @@ spaghetti = Meal("spaghetti",10,10)
 burger = Meal("burger",7,5)
 pizza = Meal("pizza",12,8)
 
+menu = [spaghetti,burger,pizza]
+
 

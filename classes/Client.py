@@ -3,29 +3,29 @@ import pygame
 import random
 from classes.Seat import Seat
 from typing import List
-from classes.Meal import Meal
+from classes.Meal import *
 from classes.Table import Table
-from misc.images import faces, imgWaiting
+from misc.images import faces, imgWaiting, imgGiveMe
 
 class Order:
-    def __init__(self, client: 'Client', meals: List[Meal]):
+    def __init__(self, client: 'Client', meal):
         self.client = client
-        self.meals = meals
-        self.total_price = 0
-        for meal in meals:
-            self.total_price += meal.price
+        self.meal: Meal = meal
+        self.status = 0 #0- ordered, 1- in waiter memory 2- in preparing 3-ready to take 4- in waiter hands 5-completed
+        self.timePrepared = 0
 
 class Client:
     def __init__(self, name, surname, map_grid, size: int, seats):
         self.name = name
         self.surname = surname
-        self.orders = []
+        self.order = None
         self.bill = 0
         self.map_grid = map_grid
         self.handled= 0
         self.position = self.get_random_seat_position(seats)
         self._client_image = random.choice(faces)
         self._size = size
+        self.placeOrder(random.choice(menu))
 
     def get_random_seat_position(self, seats: List[Seat]):
         empty_seats = []
@@ -43,18 +43,23 @@ class Client:
 
             return Vector2(0, 0)
     
-    def order(self,order: Order):
-        self.orders.append(order)
-        self.bill += order.total_price
+    def placeOrder(self,meal: Meal):
+        self.order = Order(self,meal)
+        self.bill += meal.price
 
     def render(self, display,ticks):
         display.blit(
             self._client_image,
             (self.position.x * self._size, self.position.y * self._size)
         )
-        if self.handled == 0 and ticks in(1,2,3,4,5):
+        if self.handled == 0 and ticks % 10 in (1,2,3,4,5):
             display.blit(
                 imgWaiting,
+                (self.position.x * self._size, self.position.y * self._size)
+            )
+        if self.order.status == 4 and ticks % 10 in (3,4,5,6,7,8):
+            display.blit(
+                imgGiveMe,
                 (self.position.x * self._size, self.position.y * self._size)
             )
 

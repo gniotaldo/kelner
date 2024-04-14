@@ -1,6 +1,7 @@
 import pygame
 from pygame.math import Vector2
 from misc.images import imgTable
+from misc.config import BAR
 
 class Table:
     def __init__(self, position: Vector2, size: int, map_width: int, map_height: int):
@@ -19,7 +20,7 @@ class Table:
         self.add_seat(Vector2(position.x, position.y + 1))
 
     def add_seat(self, position: Vector2):
-        if 0 <= position.x < self.map_width and 0 <= position.y < self.map_height:
+        if BAR <= position.x < self.map_width and 0 <= position.y < self.map_height:
             self.seats_cells.append(position)
 
     def render(self, display):
